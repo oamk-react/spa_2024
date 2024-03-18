@@ -9,27 +9,30 @@ import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 import NotFound from './pages/NotFound'
 import { Route, Routes } from 'react-router-dom'
-import { useState } from 'react'
+import UserProvider from './context/UserProvider'
+import PrivateRoute from './pages/PrivateRoute'
 
 function App() {
-  const [user, setUser] = useState(null)
-
   return (
-    <>
+    <UserProvider>
       <Header></Header>
-      <Navbar user={user}></Navbar>
+      <Navbar></Navbar>
       <div className='container'>
         <Routes>
           <Route path="/" exact element={<Home />} />
-          <Route path="/login" element={<Login setUser={setUser}/>} />
-          <Route path="/logout" element={<Logout setUser={setUser}/>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/weather" element={<Weather/>} />
-          <Route path="/about" element={<About user={user}/>} />
+
+          <Route element={<PrivateRoute />}>
+            <Route path="/about" element={<About />} />
+          </Route>
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
       <Footer></Footer>
-    </>
+    </UserProvider>
   );
 }
 

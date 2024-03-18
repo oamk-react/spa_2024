@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import './Navbar.css'
 import React from 'react'
+import { useUser } from '../context/useUser'
 
-export default function Navbar({user}) {
+export default function Navbar() {
+  const { user } = useUser()
   return (
     <nav>
       <div>
